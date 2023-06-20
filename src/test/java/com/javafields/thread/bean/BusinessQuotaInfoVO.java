@@ -1,4 +1,4 @@
-package thread.bean;
+package com.javafields.thread.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package thread;
+package com.javafields.thread;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import thread.bean.BusinessQuotaInfoVO;
+import com.javafields.thread.bean.BusinessQuotaInfoVO;
 
 import java.math.BigDecimal;
 import java.time.Clock;
@@ -236,9 +236,9 @@ public class CompletableFutureTest {
         log.info(" main结束,收集子线程结果:"+ JSON.toJSONString(collect));
 
         // 每个异步线程阻塞获取结果
-        // thread.bean.BusinessQuotaInfoVO join1 = completableFuture1.join();
-        // thread.bean.BusinessQuotaInfoVO join2 = completableFuture2.join();
-        // thread.bean.BusinessQuotaInfoVO join3 = completableFuture3.join();
+        // com.javafields.thread.bean.BusinessQuotaInfoVO join1 = completableFuture1.join();
+        // com.javafields.thread.bean.BusinessQuotaInfoVO join2 = completableFuture2.join();
+        // com.javafields.thread.bean.BusinessQuotaInfoVO join3 = completableFuture3.join();
         // resultCollection.add(join1);
         // resultCollection.add(join2);
         // resultCollection.add(join3);
