@@ -2,7 +2,7 @@
 基于1.8，记录jdk中一些高级api的用法
 
 # 项目结构
-.
+```aidl
 ├── pom.xml
 ├── src
    ├── main
@@ -23,6 +23,8 @@
                        ├── CompletableFutureTest.java
                        └── bean
                            └── BusinessQuotaInfoVO.java
+```
+
 
 
 
