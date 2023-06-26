@@ -1,23 +1,32 @@
 package com.javafields.thread;
 
+import com.javafields.response.Result;
+import com.javafields.task.CallableTask;
+
 import java.util.concurrent.*;
 
 /**
  * @author turboqiang
  */
 public class FutureExample {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    /**
+     * 获取单任务异步结果示例
+     * @param args
+     */
+    public static void main(String[] args) {
+        // 创建单任务线程池
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<Integer> future = executor.submit(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                System.out.println("子任务执行耗时2秒");
-                TimeUnit.SECONDS.sleep(2);
-                return 123;
-            }
-        });
-        System.out.println("主线程阻塞获取结果中...");
-        System.out.println("主线程阻塞获取结果中:"+future.get());
+        // 提交一个有结果返回的异步任务
+        Future<Result> future = executor.submit(new CallableTask("SubTask"));
+        // 获取到结果之前,主线程会阻塞
+        System.out.println(Thread.currentThread().getName()+":waiting for results...");
+        try {
+            Result result = future.get();
+            System.out.println(result.getName() + ": ended at  " + result.getTimestamp());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        // 关闭线程池,结束进程
         executor.shutdown();
     }
 }

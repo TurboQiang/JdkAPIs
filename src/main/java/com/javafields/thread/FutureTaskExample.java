@@ -1,5 +1,8 @@
 package com.javafields.thread;
 
+import com.javafields.response.Result;
+import com.javafields.task.CallableTask;
+
 import java.util.concurrent.*;
 
 
@@ -12,29 +15,26 @@ public class FutureTaskExample {
 
 
     /**
-     * 在这个例子中，我们创建了一个FutureTask，它的任务是计算0到9的和。
+     * 在这个例子中，我们基于CallableTask创建了一个FutureTask
      * 然后我们使用ExecutorService来执行这个FutureTask。
      * 最后，我们调用futureTask.get()方法来获取异步计算的结果。
      * @param args
      */
     public static void main(String[] args) {
+        // 创建单任务线程池
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Integer> futureTask = new FutureTask<>(() -> {
-            int sum = 0;
-            for (int i = 0; i < 10; i++) {
-                sum += i;
-            }
-            System.out.println("子任务执行耗时2秒");
-            TimeUnit.SECONDS.sleep(2);
-            return sum;
-        });
+        // 提交一个有结果返回的异步任务
+        FutureTask<Result> futureTask = new FutureTask<>(new CallableTask("SubTask"));
         executor.execute(futureTask);
+        // 获取到结果之前,主线程会阻塞
+        System.out.println(Thread.currentThread().getName()+":waiting for results...");
         try {
-            System.out.println("主线程阻塞获取结果中...");
-            System.out.println("主线程阻塞获取结果中:"+futureTask.get());
+            Result result = futureTask.get();
+            System.out.println(result.getName() + ": ended at  " + result.getTimestamp());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        // 关闭线程池,结束进程
         executor.shutdown();
     }
 }
