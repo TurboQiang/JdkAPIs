@@ -1,8 +1,3 @@
-# JdkAPIs
-基于1.8，记录jdk中一些高级api的用法
-
-# 项目结构
-```
 .
 ├── Contents.txt
 ├── README.md
@@ -27,8 +22,4 @@
 │                       ├── CompletableFutureTest.java
 │                       └── bean
 │                           └── BusinessQuotaInfoVO.java
-```
-
-
-
 
