@@ -2,6 +2,7 @@ package com.javafields.thread;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.concurrent.*;
 
 /**
  * @author turboqiang
- * 必须等待所有的任务执行完成后统一返回
+ *  结果集的顺序与任务顺序保持一致,且必须等待所有的任务执行完成后统一返回
  */
 public class ThreadPoolExecutorInvokeAll {
 
@@ -40,12 +41,12 @@ public class ThreadPoolExecutorInvokeAll {
             Future<Result> future = resultList.get(i);
             try {
                 Result result = future.get();
-                System.out.println(result.getName() + ": " + result.getTimestamp());
+                System.out.println(result.getName() + ": ended at  " + result.getTimestamp());
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
-
+        // 关闭线程池,结束进程
         executor.shutdown();
     }
 
@@ -90,7 +91,8 @@ public class ThreadPoolExecutorInvokeAll {
 
         @Override
         public Result call() {
-            System.out.printf("%s: Starting\n", this.name);
+            String startTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+            System.out.printf("%s: Starting at %s \n", this.name, startTime);
 
             try {
                 long duration = (long) (Math.random() * 10);
@@ -99,8 +101,8 @@ public class ThreadPoolExecutorInvokeAll {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            return new Result(this.name, LocalDateTime.now().toString());
+            String endTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+            return new Result(this.name, endTime);
         }
     }
 }
